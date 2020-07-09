@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3>All Products</h3>
+    <h3>Products</h3>
     <div v-if="message" class="alert alert-success">
       {{ message }}
     </div>
@@ -32,18 +32,24 @@
               >
                 -
               </button>
+
+              &nbsp;&nbsp;
               <label :id="'countlbl_' + product.productId">0</label>
+              &nbsp;&nbsp;
+
               <button
-                class="btn btn-warning"
+                class="btn btn-info"
                 v-on:click="increaseCount(product.productId)"
               >
                 +
               </button>
+
+              &nbsp;&nbsp;
               <button
-                class="btn btn-warning"
+                class="btn btn-secondary"
                 v-on:click="calculateProductCostClicked(product.productId)"
               >
-                Calculate Price
+                Get Price
               </button>
             </td>
             <td>
@@ -83,11 +89,13 @@ export default {
         .innerHTML;
       ProductDataService.calculateProductCost(product_id, number_of_units)
         .then(response => {
+          this.message = null;
           document.getElementById("costlbl_" + product_id).innerHTML =
             response.data.calculatedTotalPrice;
         })
         .catch(error => {
           this.message = error;
+          document.getElementById("costlbl_" + product_id).innerHTML = "0.00";
           console.error(error);
         });
     },
@@ -97,12 +105,14 @@ export default {
       document.getElementById("countlbl_" + product_id).innerHTML =
         parseInt(document.getElementById("countlbl_" + product_id).innerHTML) -
         1;
+      this.message = null;
     },
 
     increaseCount(product_id) {
       document.getElementById("countlbl_" + product_id).innerHTML =
         parseInt(document.getElementById("countlbl_" + product_id).innerHTML) +
         1;
+      this.message = null;
     }
   },
   created() {

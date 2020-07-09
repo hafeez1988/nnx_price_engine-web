@@ -15,7 +15,7 @@ class ProductDataService {
   }
 
   provisionProduct(product_name, category, price_per_carton, units_per_carton) {
-    return axios.post(`${PRICE_ENGINE_API_URL}/product/price`, {
+    return axios.put(`${PRICE_ENGINE_API_URL}/product`, {
       name: `${product_name}`,
       category: `${category}`,
       pricePerCarton: `${price_per_carton}`,
