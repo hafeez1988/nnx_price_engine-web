@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h3>Products</h3>
+    <br />
     <div v-if="message" class="alert alert-success">
       {{ message }}
     </div>
@@ -22,8 +23,8 @@
             <td>{{ product.name }}</td>
             <td>{{ product.category }}</td>
 
-            <td>{{ product.productConfig.pricePerUnit }}</td>
-            <td>{{ product.productConfig.pricePerCarton }}</td>
+            <td>Rs. {{ product.productConfig.pricePerUnit }}</td>
+            <td>Rs. {{ product.productConfig.pricePerCarton }}</td>
             <td>{{ product.productConfig.unitsPerCarton }}</td>
             <td>
               <button
@@ -53,7 +54,7 @@
               </button>
             </td>
             <td>
-              <label :id="'costlbl_' + product.productId">0.00</label>
+              Rs. <label :id="'costlbl_' + product.productId">0.00</label>
             </td>
           </tr>
         </tbody>
@@ -79,7 +80,11 @@ export default {
           this.products = response.data;
         })
         .catch(error => {
-          this.message = error;
+          this.message =
+            "Error code: " +
+            error.response.headers["x-nnx-code"] +
+            " | Error message: " +
+            error.response.headers["x-nnx-message"];
           console.error(error);
         });
     },
@@ -94,7 +99,11 @@ export default {
             response.data.calculatedTotalPrice;
         })
         .catch(error => {
-          this.message = error;
+          this.message =
+            "Error code: " +
+            error.response.headers["x-nnx-code"] +
+            " | Error message: " +
+            error.response.headers["x-nnx-message"];
           document.getElementById("costlbl_" + product_id).innerHTML = "0.00";
           console.error(error);
         });

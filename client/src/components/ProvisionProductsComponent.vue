@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <h3>Provision New Product</h3>
+    <h3>Add New Product</h3>
+    <br />
     <div v-if="message" class="alert alert-success">
       {{ message }}
     </div>
@@ -90,7 +91,11 @@ export default {
           location.reload();
         })
         .catch(error => {
-          this.message = error;
+          this.message =
+            "Error code: " +
+            error.response.headers["x-nnx-code"] +
+            " | Error message: " +
+            error.response.headers["x-nnx-message"];
           console.error(error);
         });
     }
