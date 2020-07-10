@@ -2,7 +2,7 @@
   <div class="container">
     <h3>Add New Product</h3>
     <br />
-    <div v-if="message" class="alert alert-success">
+    <div v-if="message" class="alert alert-danger">
       {{ message }}
     </div>
     <div class="container">
